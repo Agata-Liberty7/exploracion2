@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados de Exploración Dinámica</title>
+</head>
+<body>
+    <h1>Resultados de Exploración Dinámica</h1>
+    <h2>Datos ingresados:</h2>
+    <ul>
+        <li>Paso y trote: {{ resultados.paso_trote }}</li>
+        <li>Círculos: {{ resultados.circulos }}</li>
+        <li>Escaleras: {{ resultados.escaleras }}</li>
+        <li>Postura: {{ resultados.postura }}</li>
+        <li>Tumbado y levantarse: {{ resultados.tumbado }}</li>
+    </ul>
+
+    <h2>Diagnóstico:</h2>
+    <p>{{ diagnostico }}</p>
+
+    <h2>Recomendaciones:</h2>
+    <ul>
+        {% for rec in recomendaciones %}
+        <li>{{ rec }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

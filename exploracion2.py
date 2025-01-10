@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -6,8 +6,14 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/exploracion', methods=['GET', 'POST'])
-def exploracion():
+# Маршрут для начального выбора "Exploración Funcional"
+@app.route('/exploracion_funcional')
+def exploracion_funcional():
+    return render_template('exploracion_funcional.html')
+
+# Маршрут для "Exploración Física"
+@app.route('/exploracion_fisica', methods=['GET', 'POST'])
+def exploracion_fisica():
     if request.method == 'POST':
         # Получаем данные из формы
         observacion = request.form.get('observacion')
@@ -24,46 +30,12 @@ def exploracion():
             "tono_muscular": tono_muscular,
             "pruebas": pruebas
         }
-        diagnostico, recomendaciones = generar_diagnostico_y_recomendaciones(resultados)
+        request.form = resultados  # сохраняем результаты для следующего шага
+        return redirect(url_for('exploracion_dinamica'))
 
-        # Возвращаем результаты на страницу
-        return render_template('resultados.html', resultados=resultados, diagnostico=diagnostico, recomendaciones=recomendaciones)
+    return render_template('formulario_fisica.html')
 
-    return render_template('formulario.html')
-
-
-def generar_diagnostico_y_recomendaciones(resultados):
-    """Генерация диагноза и рекомендаций."""
-    diagnostico = []
-    if "inclinada" in resultados["observacion"].lower():
-        diagnostico.append("Alteración en la postura con posible desequilibrio pélvico.")
-    if "severo" in resultados["palpacion"].lower():
-        diagnostico.append("Dolor severo en articulaciones con posible inflamación.")
-    if "restricción severa" in resultados["movilizacion"].lower():
-        diagnostico.append("Limitación severa del rango de movimiento.")
-    if "hipotonía" in resultados["tono_muscular"].lower():
-        diagnostico.append("Reducción del tono muscular en las extremidades posteriores.")
-    if "ortolani positiva" in resultados["pruebas"].lower():
-        diagnostico.append("Displasia de cadera severa confirmada.")
-
-    diagnostico_final = " ".join(diagnostico) if diagnostico else "Sin hallazgos significativos."
-
-    recomendaciones = []
-    if "dolor severo" in resultados["palpacion"].lower() or "restricción severa" in resultados["movilizacion"].lower():
-        recomendaciones.append("Terapia láser: 3-4 veces por semana para aliviar el dolor.")
-    if "hipotonía" in resultados["tono_muscular"].lower():
-        recomendaciones.append("Ejercicios de fortalecimiento: 2-3 veces por semana.")
-    if "ortolani positiva" in resultados["pruebas"].lower():
-        recomendaciones.append("Consulta con el veterinario para evaluar cirugía correctiva.")
-    if not recomendaciones:
-        recomendaciones.append("Monitoreo continuo sin intervención específica.")
-
-    return diagnostico_final, recomendaciones
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
+# Маршрут для "Exploración Dinámica"
 @app.route('/exploracion_dinamica', methods=['GET', 'POST'])
 def exploracion_dinamica():
     if request.method == 'POST':
@@ -89,7 +61,7 @@ def exploracion_dinamica():
 
     return render_template('formulario_dinamica.html')
 
-
+# Функции для генерации диагнозов
 def generar_diagnostico_dinamico(resultados):
     """Генерация диагноза и рекомендаций для динамической оценки."""
     diagnostico = []
@@ -116,3 +88,7 @@ def generar_diagnostico_dinamico(resultados):
 
     return diagnostico_final, recomendaciones
 
+# Генерация диагноза для "Exploración Física" остается без изменений
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

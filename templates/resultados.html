@@ -4,20 +4,25 @@
     <title>Resultados de Exploración</title>
 </head>
 <body>
-    <h1>Resultados de Exploración Funcional</h1>
+    <h1>Resultados de Exploración</h1>
+
     <h2>Exploración Física</h2>
-    <p>Observación inicial: {{ resultados.get('observacion', 'No disponible') }}</p>
-    <p>Palpación: {{ resultados.get('palpacion', 'No disponible') }}</p>
-    <p>Movilización: {{ resultados.get('movilizacion', 'No disponible') }}</p>
-    <p>Tono muscular: {{ resultados.get('tono_muscular', 'No disponible') }}</p>
-    <p>Pruebas específicas: {{ resultados.get('pruebas', 'No disponible') }}</p>
+    <ul>
+        <li>Observación inicial: {{ resultados_fisica.observacion }}</li>
+        <li>Palpación: {{ resultados_fisica.palpacion }}</li>
+        <li>Movilización pasiva: {{ resultados_fisica.movilizacion }}</li>
+        <li>Tono muscular: {{ resultados_fisica.tono_muscular }}</li>
+        <li>Pruebas específicas: {{ resultados_fisica.pruebas }}</li>
+    </ul>
 
     <h2>Exploración Dinámica</h2>
-    <p>Paso y trote: {{ resultados.get('paso_trote', 'No disponible') }}</p>
-    <p>Círculos: {{ resultados.get('circulos', 'No disponible') }}</p>
-    <p>Escaleras: {{ resultados.get('escaleras', 'No disponible') }}</p>
-    <p>Postura: {{ resultados.get('postura', 'No disponible') }}</p>
-    <p>Tumbado: {{ resultados.get('tumbado', 'No disponible') }}</p>
+    <ul>
+        <li>Paso y trote: {{ resultados_dinamica.paso_trote }}</li>
+        <li>Círculos: {{ resultados_dinamica.circulos }}</li>
+        <li>Escaleras: {{ resultados_dinamica.escaleras }}</li>
+        <li>Postura: {{ resultados_dinamica.postura }}</li>
+        <li>Tumbado: {{ resultados_dinamica.tumbado }}</li>
+    </ul>
 
     <h2>Diagnóstico</h2>
     <p>{{ diagnostico }}</p>
@@ -25,7 +30,7 @@
     <h2>Recomendaciones</h2>
     <ul>
         {% for recomendacion in recomendaciones %}
-            <li>{{ recomendacion }}</li>
+        <li>{{ recomendacion }}</li>
         {% endfor %}
     </ul>
 </body>

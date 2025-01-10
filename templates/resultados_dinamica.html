@@ -2,26 +2,54 @@
 <html>
 <head>
     <title>Resultados de Exploración Dinámica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>Resultados de Exploración Dinámica</h1>
+    <p>Este es el resultado del segundo paso del proceso de <strong>Exploración Funcional</strong>.</p>
+
     <h2>Datos ingresados:</h2>
     <ul>
-        <li>Paso y trote: {{ resultados.paso_trote }}</li>
-        <li>Círculos: {{ resultados.circulos }}</li>
-        <li>Escaleras: {{ resultados.escaleras }}</li>
-        <li>Postura: {{ resultados.postura }}</li>
-        <li>Tumbado y levantarse: {{ resultados.tumbado }}</li>
-    </ul>
-
-    <h2>Diagnóstico:</h2>
-    <p>{{ diagnostico }}</p>
-
-    <h2>Recomendaciones:</h2>
-    <ul>
-        {% for rec in recomendaciones %}
-        <li>{{ rec }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+        <li><strong>Paso y trote:</strong> {{ resultados.paso_trote }}</li>
+        <li><strong>Círculos:</strong> {{ resultados.circulos }}</li>
+        <li><strong>Subir y bajar escaleras:</strong> {{ resultados.escaleras }}</li>
+        <li><strong>Postura:</strong> {{ resultad

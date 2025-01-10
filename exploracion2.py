@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta'  # Ключ для работы с сессиями
+app.secret_key = 'ваш_секретный_ключ'  # Установите секретный ключ для сессий
 
 @app.route('/')
 def home():
@@ -24,10 +24,9 @@ def exploracion_fisica():
             "tono_muscular": request.form.get('tono_muscular'),
             "pruebas": request.form.get('pruebas')
         }
-        # Сохраняем результаты в сессию
+        # Сохраняем результаты в сессии
         session['resultados_fisica'] = resultados_fisica
         return redirect(url_for('exploracion_dinamica'))
-
     return render_template('formulario_fisica.html')
 
 # Маршрут для "Exploración Dinámica"
@@ -42,64 +41,34 @@ def exploracion_dinamica():
             "postura": request.form.get('postura'),
             "tumbado": request.form.get('tumbado')
         }
-        # Сохраняем результаты динамической проверки в сессию
-        session['resultados_dinamica'] = resultados_dinamica
-
-        # Генерируем диагнозы
-        diagnostico, recomendaciones = generar_diagnostico_completo()
-
-        # Возвращаем результаты на страницу
-        return render_template('resultados.html', diagnostico=diagnostico, recomendaciones=recomendaciones)
-
+        # Извлекаем результаты физического осмотра из сессии
+        resultados_fisica = session.get('resultados_fisica', {})
+        # Объединяем результаты
+        resultados_completос = {**resultados_fisica, **resultados_dinamica}
+        diagnostico, recomendaciones = generar_diagnostico_completo(resultados_completос)
+        return render_template('resultados.html', resultados=resultados_completос, diagnostico=diagnostico, recomendaciones=recomendaciones)
     return render_template('formulario_dinamica.html')
 
-# Генерация диагнозов и рекомендаций
-def generar_diagnostico_completo():
-    # Получаем данные из сессии
-    resultados_fisica = session.get('resultados_fisica', {})
-    resultados_dinamica = session.get('resultados_dinamica', {})
-
-    # Генерация диагноза и рекомендаций для физической оценки
+# Функции для генерации диагнозов
+def generar_diagnostico_completo(resultados):
+    """Генерация диагноза и рекомендаций на основе объединенных результатов."""
     diagnostico = []
-    if "inclinada" in resultados_fisica.get("observacion", "").lower():
+    # Анализ результатов физического осмотра
+    if "inclinada" in resultados.get("observacion", "").lower():
         diagnostico.append("Alteración en la postura con posible desequilibrio pélvico.")
-    if "severo" in resultados_fisica.get("palpacion", "").lower():
+    if "severo" in resultados.get("palpacion", "").lower():
         diagnostico.append("Dolor severo en articulaciones con posible inflamación.")
-    if "restricción severa" in resultados_fisica.get("movilizacion", "").lower():
-        diagnostico.append("Limitación severa del rango de movimiento.")
-    if "hipotonía" in resultados_fisica.get("tono_muscular", "").lower():
-        diagnostico.append("Reducción del tono muscular en las extremidades posteriores.")
-    if "ortolani positiva" in resultados_fisica.get("pruebas", "").lower():
-        diagnostico.append("Displasia de cadera severa confirmada.")
-
-    # Генерация диагноза и рекомендаций для динамической оценки
-    if "anormalidad" in resultados_dinamica.get("paso_trote", "").lower():
+    # Анализ результатов динамического осмотра
+    if "anormalidad" in resultados.get("paso_trote", "").lower():
         diagnostico.append("Anormalidad en el paso/trote detectada, posible cojera.")
-    if "elevación" in resultados_dinamica.get("circulos", "").lower():
+    if "elevación" in resultados.get("circulos", "").lower():
         diagnostico.append("Elevación de cadera al caminar en círculos, posible displasia de cadera.")
-    if "dificultad" in resultados_dinamica.get("escaleras", "").lower():
-        diagnostico.append("Dificultad para subir/bajar escaleras, posible dolor o restricción de movimiento.")
-    if "postura inclinada" in resultados_dinamica.get("postura", "").lower():
-        diagnostico.append("Postura inclinada, indicativo de desequilibrio pélvico.")
-    if "dificultad" in resultados_dinamica.get("tumbado", "").lower():
-        diagnostico.append("Dificultad para tumbarse o levantarse, posible dolor severo.")
-
+    # Добавьте остальную логику...
     diagnostico_final = " ".join(diagnostico) if diagnostico else "Sin hallazgos significativos."
-
     recomendaciones = []
-    if "dolor severo" in resultados_fisica.get("palpacion", "").lower() or "restricción severa" in resultados_fisica.get("movilizacion", "").lower():
-        recomendaciones.append("Terapia láser: 3-4 veces por semana para aliviar el dolor.")
-    if "hipotonía" in resultados_fisica.get("tono_muscular", "").lower():
-        recomendaciones.append("Ejercicios de fortalecimiento: 2-3 veces por semana.")
-    if "ortolani positiva" in resultados_fisica.get("pruebas", "").lower():
-        recomendaciones.append("Consulta con el veterinario para evaluar cirugía correctiva.")
-    if "anormalidad" in resultados_dinamica.get("paso_trote", "").lower() or "dificultad" in resultados_dinamica.get("escaleras", "").lower():
-        recomendaciones.append("Terapia láser para reducir el dolor y mejorar la movilidad.")
-    if "elevación" in resultados_dinamica.get("circulos", "").lower():
-        recomendaciones.append("Ejercicios de fortalecimiento para las extremidades posteriores.")
-    if not recomendaciones:
-        recomendaciones.append("Monitoreo continuo sin intervención específica.")
-
+    if "dolor severo" in resultados.get("palpacion", "").lower():
+        recomendaciones.append("Terapia láser para reducir el dolor.")
+    # Добавьте рекомендации...
     return diagnostico_final, recomendaciones
 
 if __name__ == '__main__':

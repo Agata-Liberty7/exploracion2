@@ -1,17 +1,83 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Formulario de Exploración Física</title>
+    <title>Exploración Física</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            margin-bottom: 15px;
+            padding: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <h1>Exploración Física</h1>
-    <form method="post" action="/exploracion_fisica">
-        Observación inicial: <input type="text" name="observacion"><br>
-        Palpación: <input type="text" name="palpacion"><br>
-        Movilización pasiva: <input type="text" name="movilizacion"><br>
-        Evaluación del tono muscular: <input type="text" name="tono_muscular"><br>
-        Pruebas específicas: <input type="text" name="pruebas"><br>
-        <input type="submit" value="Siguiente">
+    <form method="POST">
+        <label for="observacion">Observación inicial:</label>
+        <select name="observacion" id="observacion">
+            <option value="Normal">Normal</option>
+            <option value="Inclinada hacia un lado">Inclinada hacia un lado</option>
+            <option value="Desviación significativa">Desviación significativa</option>
+        </select>
+
+        <label for="palpacion">Palpación:</label>
+        <select name="palpacion" id="palpacion">
+            <option value="Sin dolor">Sin dolor</option>
+            <option value="Dolor leve">Dolor leve</option>
+            <option value="Dolor severo con inflamación">Dolor severo con inflamación</option>
+        </select>
+
+        <label for="movilizacion">Movilización pasiva:</label>
+        <select name="movilizacion" id="movilizacion">
+            <option value="Normal">Normal</option>
+            <option value="Restricción leve">Restricción leve</option>
+            <option value="Restricción severa del movimiento">Restricción severa del movimiento</option>
+        </select>
+
+        <label for="tono_muscular">Evaluación del tono muscular:</label>
+        <select name="tono_muscular" id="tono_muscular">
+            <option value="Normal">Normal</option>
+            <option value="Hipotonía">Hipotonía</option>
+            <option value="Hipertonía">Hipertonía</option>
+        </select>
+
+        <label for="pruebas">Pruebas específicas:</label>
+        <select name="pruebas" id="pruebas">
+            <option value="Sin hallazgos">Sin hallazgos</option>
+            <option value="Prueba de Ortolani positiva">Prueba de Ortolani positiva</option>
+            <option value="Pruebas adicionales necesarias">Pruebas adicionales necesarias</option>
+        </select>
+
+        <button type="submit">Siguiente</button>
     </form>
 </body>
 </html>

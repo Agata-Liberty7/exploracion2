@@ -1,52 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exploración Física</title>
+    <title>Formulario de Exploración Física</title>
 </head>
 <body>
     <h1>Exploración Física</h1>
-    <form method="POST">
-        <!-- Observación inicial -->
-        <label>Observación inicial:</label><br>
-        <select name="observacion">
-            <option value="Postura normal">Postura normal</option>
-            <option value="Postura inclinada hacia un lado">Postura inclinada hacia un lado</option>
-            <option value="Dificultad para levantarse">Dificultad para levantarse</option>
-        </select><br><br>
-
-        <!-- Palpación -->
-        <label>Palpación:</label><br>
-        <select name="palpacion">
-            <option value="Sin dolor">Sin dolor</option>
-            <option value="Dolor moderado">Dolor moderado</option>
-            <option value="Dolor severo con inflamación">Dolor severo con inflamación</option>
-        </select><br><br>
-
-        <!-- Movilización pasiva -->
-        <label>Movilización pasiva:</label><br>
-        <select name="movilizacion">
-            <option value="Rango de movimiento completo">Rango de movimiento completo</option>
-            <option value="Restricción moderada">Restricción moderada</option>
-            <option value="Restricción severa del movimiento">Restricción severa del movimiento</option>
-        </select><br><br>
-
-        <!-- Evaluación del tono muscular -->
-        <label>Evaluación del tono muscular:</label><br>
-        <select name="tono_muscular">
-            <option value="Normal">Normal</option>
-            <option value="Hipertonía">Hipertonía</option>
-            <option value="Hipotonía">Hipotonía</option>
-        </select><br><br>
-
-        <!-- Pruebas específicas -->
-        <label>Pruebas específicas:</label><br>
-        <select name="pruebas">
-            <option value="Pruebas negativas">Pruebas negativas</option>
-            <option value="Prueba de Ortolani positiva">Prueba de Ortolani positiva</option>
-            <option value="Pruebas ambiguas">Pruebas ambiguas</option>
-        </select><br><br>
-
-        <button type="submit">Continuar a Exploración Dinámica</button>
+    <form method="post" action="/exploracion_fisica">
+        Observación inicial: <input type="text" name="observacion"><br>
+        Palpación: <input type="text" name="palpacion"><br>
+        Movilización pasiva: <input type="text" name="movilizacion"><br>
+        Evaluación del tono muscular: <input type="text" name="tono_muscular"><br>
+        Pruebas específicas: <input type="text" name="pruebas"><br>
+        <input type="submit" value="Siguiente">
     </form>
 </body>
 </html>

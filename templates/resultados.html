@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Resultados</title>
+    <title>Resultados de Exploración</title>
 </head>
 <body>
-    <h1>Resultados de la Exploración</h1>
-    <h2>Datos ingresados:</h2>
-    <ul>
-        <li>Observación inicial: {{ resultados.observacion }}</li>
-        <li>Palpación: {{ resultados.palpacion }}</li>
-        <li>Movilización pasiva: {{ resultados.movilizacion }}</li>
-        <li>Evaluación del tono muscular: {{ resultados.tono_muscular }}</li>
-        <li>Pruebas específicas: {{ resultados.pruebas }}</li>
-    </ul>
+    <h1>Resultados de Exploración Funcional</h1>
+    <h2>Exploración Física</h2>
+    <p>Observación inicial: {{ resultados.get('observacion', 'No disponible') }}</p>
+    <p>Palpación: {{ resultados.get('palpacion', 'No disponible') }}</p>
+    <p>Movilización: {{ resultados.get('movilizacion', 'No disponible') }}</p>
+    <p>Tono muscular: {{ resultados.get('tono_muscular', 'No disponible') }}</p>
+    <p>Pruebas específicas: {{ resultados.get('pruebas', 'No disponible') }}</p>
 
-    <h2>Diagnóstico:</h2>
+    <h2>Exploración Dinámica</h2>
+    <p>Paso y trote: {{ resultados.get('paso_trote', 'No disponible') }}</p>
+    <p>Círculos: {{ resultados.get('circulos', 'No disponible') }}</p>
+    <p>Escaleras: {{ resultados.get('escaleras', 'No disponible') }}</p>
+    <p>Postura: {{ resultados.get('postura', 'No disponible') }}</p>
+    <p>Tumbado: {{ resultados.get('tumbado', 'No disponible') }}</p>
+
+    <h2>Diagnóstico</h2>
     <p>{{ diagnostico }}</p>
 
-    <h2>Recomendaciones:</h2>
+    <h2>Recomendaciones</h2>
     <ul>
-        {% for rec in recomendaciones %}
-        <li>{{ rec }}</li>
+        {% for recomendacion in recomendaciones %}
+            <li>{{ recomendacion }}</li>
         {% endfor %}
     </ul>
 </body>
